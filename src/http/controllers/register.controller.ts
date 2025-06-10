@@ -3,7 +3,8 @@ import { hash } from "bcryptjs";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import { RegisterUserService } from "../services/user.service";
-import { UserRepository } from "../repositories/user.repository";
+import { UserRepository } from "../repositories/prisma";
+import { UserExistError } from "../services/errors";
 
 export const register = async (
   request: FastifyRequest,
@@ -19,13 +20,18 @@ export const register = async (
 
   try {
     const registerUserService = new RegisterUserService(new UserRepository());
+
     await registerUserService.handle({
       name,
       email,
       password,
     });
   } catch (error) {
-    return reply.status(409).send();
+    if (error instanceof UserExistError) {
+      return reply.status(409).send({ message: error.message });
+    }
+
+    throw error;
   }
 
   return reply.status(201).send();
