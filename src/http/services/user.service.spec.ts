@@ -45,13 +45,13 @@ describe("Register Use Service", () => {
 
     const email = "teste@gmail.com";
 
-    const user = await registerUserService.handle({
+    await registerUserService.handle({
       name: "teste",
       email,
       password: "123456",
     });
 
-    expect(() =>
+    await expect(() =>
       registerUserService.handle({
         name: "teste",
         email,
