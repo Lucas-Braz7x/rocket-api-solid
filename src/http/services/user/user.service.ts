@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs";
-import { BaseUserRepository } from "../repositories/prisma/dto/user.repository";
-import { UserExistError } from "./errors/";
+import { BaseUserRepository } from "@/http/repositories/prisma/dto/user.repository";
+import { UserExistError } from "../../../config/errors";
 import type { User } from "@prisma/client";
 
 interface RegisterUserServiceProps {

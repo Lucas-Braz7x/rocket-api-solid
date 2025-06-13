@@ -1,10 +1,8 @@
-import { prisma } from "@/lib/prisma";
-import { hash } from "bcryptjs";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { RegisterUserService } from "../services/user.service";
+import { RegisterUserService } from "@/http/services/user/user.service";
 import { UserRepository } from "../repositories/prisma";
-import { UserExistError } from "../services/errors";
+import { UserExistError } from "../../config/errors";
 
 export const register = async (
   request: FastifyRequest,

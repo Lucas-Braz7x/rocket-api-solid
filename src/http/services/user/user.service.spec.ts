@@ -1,8 +1,8 @@
 import { compare } from "bcryptjs";
 import { RegisterUserService } from "./user.service";
 import { expect, describe, it } from "vitest";
-import { InMemoryUserDatabaseRepository } from "../repositories/in-memory/in-memory-database-user.repository";
-import { UserExistError } from "./errors";
+import { InMemoryUserDatabaseRepository } from "../../repositories/in-memory/in-memory-database-user.repository";
+import { UserExistError } from "../../../config/errors";
 
 describe("Register Use Service", () => {
   it("Deve ser possível cadastrar um usuário", async () => {
