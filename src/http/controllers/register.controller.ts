@@ -1,8 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { RegisterUserService } from "@/http/services/user/user.service";
-import { UserRepository } from "../repositories/prisma";
 import { UserExistError } from "../../config/errors";
+import { userFactory } from '../factories';
 
 export const register = async (
   request: FastifyRequest,
@@ -17,7 +16,7 @@ export const register = async (
   const { name, email, password } = registerBodySchema.parse(request.body);
 
   try {
-    const registerUserService = new RegisterUserService(new UserRepository());
+    const registerUserService = userFactory();
 
     await registerUserService.handle({
       name,
