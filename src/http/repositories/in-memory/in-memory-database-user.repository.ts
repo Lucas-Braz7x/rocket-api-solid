@@ -27,4 +27,14 @@ export class InMemoryUserDatabaseRepository implements BaseUserRepository {
 
     return user;
   }
+
+  async findById(id: string): Promise<User | null> {
+    const user = this.itens.find((record) => record.id === id);
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
 }
