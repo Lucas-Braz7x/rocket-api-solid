@@ -9,7 +9,7 @@ let inMemoryGymDatabaseRepository: InMemoryGymDatabaseRepository;
 let sut: CheckInService;
 
 describe("CheckIn Use Service", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     inMemoryCheckInDatabaseRepository = new InMemoryCheckInDatabaseRepository();
     inMemoryGymDatabaseRepository = new InMemoryGymDatabaseRepository();
     sut = new CheckInService(
@@ -17,13 +17,13 @@ describe("CheckIn Use Service", () => {
       inMemoryGymDatabaseRepository
     );
 
-    inMemoryGymDatabaseRepository.itens.push({
+    await inMemoryGymDatabaseRepository.create({
       id: "teste",
       title: "academia",
       description: "",
       phone: "",
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: -22.4327836,
+      longitude: -43.138504,
     });
 
     vi.useFakeTimers();
@@ -37,8 +37,8 @@ describe("CheckIn Use Service", () => {
     const { checkIn } = await sut.handle({
       userId: "teste",
       gymId: "teste",
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -22.4325592,
+      userLongitude: -43.137624,
     });
 
     expect(checkIn.id).toEqual(expect.any(String));
@@ -50,16 +50,16 @@ describe("CheckIn Use Service", () => {
     await sut.handle({
       userId: "teste",
       gymId: "teste",
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -22.4325592,
+      userLongitude: -43.137624,
     });
 
     await expect(async () =>
       sut.handle({
         userId: "teste",
         gymId: "teste",
-        userLatitude: 0,
-        userLongitude: 0,
+        userLatitude: -22.4325592,
+        userLongitude: -43.137624,
       })
     ).rejects.toBeInstanceOf(Error);
   });
@@ -70,8 +70,8 @@ describe("CheckIn Use Service", () => {
     await sut.handle({
       userId: "teste",
       gymId: "teste",
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -22.4325592,
+      userLongitude: -43.137624,
     });
 
     vi.setSystemTime(new Date(2025, 0, 25, 8, 0, 0));
@@ -79,17 +79,14 @@ describe("CheckIn Use Service", () => {
     const { checkIn } = await sut.handle({
       userId: "teste",
       gymId: "teste",
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -22.4325592,
+      userLongitude: -43.137624,
     });
 
     expect(checkIn.id).toEqual(expect.any(String));
   });
 
   it("Não Deve ser possível um usuário realizar check in a uma distância maior do que 100m", async () => {
-    //-22.4327836,-43.138504,
-    // -22.4510145,-43.1580467
-
     inMemoryGymDatabaseRepository.itens.push({
       id: "teste-02",
       title: "academia nova",
@@ -103,8 +100,8 @@ describe("CheckIn Use Service", () => {
       sut.handle({
         userId: "teste",
         gymId: "teste-02",
-        userLatitude: -22.4510145,
-        userLongitude: -43.1580467,
+        userLatitude: -22.4615071,
+        userLongitude: -43.1447304,
       })
     ).rejects.toBeInstanceOf(Error);
   });
