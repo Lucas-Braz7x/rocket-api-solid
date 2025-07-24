@@ -85,4 +85,27 @@ describe("CheckIn Use Service", () => {
 
     expect(checkIn.id).toEqual(expect.any(String));
   });
+
+  it("Não Deve ser possível um usuário realizar check in a uma distância maior do que 100m", async () => {
+    //-22.4327836,-43.138504,
+    // -22.4510145,-43.1580467
+
+    inMemoryGymDatabaseRepository.itens.push({
+      id: "teste-02",
+      title: "academia nova",
+      description: "",
+      phone: "",
+      latitude: new Decimal(-22.4327836),
+      longitude: new Decimal(-43.138504),
+    });
+
+    await expect(
+      sut.handle({
+        userId: "teste",
+        gymId: "teste-02",
+        userLatitude: -22.4510145,
+        userLongitude: -43.1580467,
+      })
+    ).rejects.toBeInstanceOf(Error);
+  });
 });
