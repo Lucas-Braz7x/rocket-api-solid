@@ -3,6 +3,8 @@ import { expect, describe, it, beforeEach, vi, afterEach } from "vitest";
 import { InMemoryCheckInDatabaseRepository } from "@/http/repositories/in-memory/in-memory-database-check-in.repository";
 import { InMemoryGymDatabaseRepository } from "@/http/repositories/in-memory/in-memory-database-gym.repository";
 import { Decimal } from "@prisma/client/runtime";
+import { MaxDistanceError } from "@/config/errors/max-distances";
+import { MaxNumbersOfCheckInsError } from "@/config/errors/max-numbers-of-check-ins";
 
 let inMemoryCheckInDatabaseRepository: InMemoryCheckInDatabaseRepository;
 let inMemoryGymDatabaseRepository: InMemoryGymDatabaseRepository;
@@ -61,7 +63,7 @@ describe("CheckIn Use Service", () => {
         userLatitude: -22.4325592,
         userLongitude: -43.137624,
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxNumbersOfCheckInsError);
   });
 
   it("Deve ser possível um usuário realizar check in em dias diferentes", async () => {
@@ -103,6 +105,6 @@ describe("CheckIn Use Service", () => {
         userLatitude: -22.4615071,
         userLongitude: -43.1447304,
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxDistanceError);
   });
 });
