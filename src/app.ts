@@ -3,9 +3,44 @@ import { z, ZodError } from "zod";
 import { prisma } from "./lib/prisma";
 import { register } from "./http/controllers/register.controller";
 import { appRouter } from "./http/routes";
+import FastifySwagger from "@fastify/swagger";
+import FastifySwaggerUI from "@fastify/swagger-ui";
 import { env } from "./env";
 
 export const app = fastify();
+
+app.register(FastifySwagger, {
+  swagger: {
+    info: {
+      title: "Rocket SOLID Gym API",
+      description: "API de academias estilo Gympass",
+      version: "1.0.0",
+    },
+    externalDocs: {
+      url: "https://github.com/Lucas-Braz7x/rocket-api-solid",
+      description: "Repositório no GitHub",
+    },
+    host: "localhost:3000,",
+    schemes: ["http"],
+    consumes: ["application/json"],
+    produces: ["application/json"],
+    tags: [
+      { name: "users", description: "Operações com usuários" },
+      { name: "gyms", description: "Operações com academias" },
+    ],
+  },
+});
+
+app.register(FastifySwaggerUI, {
+  routePrefix: "/docs",
+  uiConfig: {
+    docExpansion: "list",
+    deepLinking: true,
+    displayOperationId: false,
+    defaultModelsExpandDepth: 1,
+  },
+  staticCSP: true,
+});
 
 app.register(appRouter);
 
