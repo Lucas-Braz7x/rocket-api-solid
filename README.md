@@ -32,8 +32,6 @@ Esse projeto é voltado para estudo e prática de princípios como:
 
 ---
 
-## 📁 Estrutura do projeto
-
 ---
 
 ## 🚀 Como executar
