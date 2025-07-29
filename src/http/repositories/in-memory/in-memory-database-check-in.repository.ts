@@ -12,6 +12,16 @@ export class InMemoryCheckInDatabaseRepository implements CheckInRepository {
       .slice((page - 1) * 20, page * 20);
   }
 
+  async findById(id: string) {
+    const checkIn = this.itens.find((record) => record.id === id);
+
+    if (!checkIn) {
+      return null;
+    }
+
+    return checkIn;
+  }
+
   async countByUserId(userId: string): Promise<number> {
     return this.itens.filter((record) => record.user_id === userId).length;
   }
@@ -46,5 +56,17 @@ export class InMemoryCheckInDatabaseRepository implements CheckInRepository {
     this.itens.push(record);
 
     return record;
+  }
+
+  async save(checkIn: CheckIn) {
+    const checkInIndex = this.itens.findIndex(
+      (record) => (record.id = checkIn.id)
+    );
+
+    if (checkInIndex >= 0) {
+      this.itens[checkInIndex] = checkIn;
+    }
+
+    return checkIn;
   }
 }
