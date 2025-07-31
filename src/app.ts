@@ -6,6 +6,7 @@ import { appRouter } from "./http/routes";
 import FastifySwagger from "@fastify/swagger";
 import FastifySwaggerUI from "@fastify/swagger-ui";
 import { env } from "./env";
+import fastifyJwt from "@fastify/jwt";
 
 export const app = fastify();
 
@@ -40,6 +41,10 @@ app.register(FastifySwaggerUI, {
     defaultModelsExpandDepth: 1,
   },
   staticCSP: true,
+});
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
 });
 
 app.register(appRouter);
