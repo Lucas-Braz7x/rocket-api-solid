@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { UserExistError } from "../../config/errors";
-import { userFactory } from '../factories';
+import { UserExistError } from "../../../config/errors";
+import { userFactory } from "../../factories";
 
 export const register = async (
   request: FastifyRequest,

@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { profileFactory } from "../factories";
+import { profileFactory } from "../../factories";
 
 export const profile = async (request: FastifyRequest, reply: FastifyReply) => {
   const getUserProfile = profileFactory();

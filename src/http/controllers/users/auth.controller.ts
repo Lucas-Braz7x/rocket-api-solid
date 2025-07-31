@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { InvalidCredentialsError } from "../../config/errors";
-import { authFactory } from "../factories";
+import { InvalidCredentialsError } from "../../../config/errors";
+import { authFactory } from "../../factories";
 
 export const auth = async (request: FastifyRequest, reply: FastifyReply) => {
   const authBodySchema = z.object({

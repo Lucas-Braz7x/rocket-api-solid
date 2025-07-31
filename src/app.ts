@@ -1,12 +1,11 @@
 import fastify from "fastify";
-import { z, ZodError } from "zod";
-import { prisma } from "./lib/prisma";
-import { register } from "./http/controllers/register.controller";
-import { appRouter } from "./http/routes";
+import { ZodError } from "zod";
 import FastifySwagger from "@fastify/swagger";
 import FastifySwaggerUI from "@fastify/swagger-ui";
 import { env } from "./env";
 import fastifyJwt from "@fastify/jwt";
+import { usersRouter } from "./http/controllers/users/routes";
+import { gymsRouter } from "./http/controllers/gyms/route";
 
 export const app = fastify();
 
@@ -47,7 +46,8 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
 
-app.register(appRouter);
+app.register(usersRouter);
+app.register(gymsRouter);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
