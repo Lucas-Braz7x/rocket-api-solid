@@ -20,7 +20,7 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
 
   const gymService = gymFactory();
 
-  await gymService.handle({
+  const { gym } = await gymService.handle({
     title,
     description,
     phone,
@@ -28,5 +28,5 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
     longitude,
   });
 
-  return reply.status(200).send();
+  return reply.status(200).send({ gym });
 };
