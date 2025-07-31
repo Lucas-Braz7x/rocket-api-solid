@@ -28,5 +28,5 @@ export const create = async (request: FastifyRequest, reply: FastifyReply) => {
     longitude,
   });
 
-  return reply.status(201).send();
+  return reply.status(200).send();
 };
