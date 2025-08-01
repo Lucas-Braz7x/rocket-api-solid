@@ -13,7 +13,7 @@ describe("Gym (e2e)", () => {
   });
 
   it("Deve ser possível criar uma academia na aplicação", async () => {
-    const { token } = await createAndAuthUser(app);
+    const { token } = await createAndAuthUser(app, "ADMIN");
 
     const response = await request(app.server)
       .post("/gyms")
