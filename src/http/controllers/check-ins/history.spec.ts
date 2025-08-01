@@ -14,7 +14,7 @@ describe("History CheckIns (e2e)", () => {
   });
 
   it("Deve ser possível criar um check in na aplicação", async () => {
-    const { token } = await createAndAuthUser(app);
+    const { token } = await createAndAuthUser(app, "ADMIN");
 
     const user = await prisma.user.findFirstOrThrow();
 

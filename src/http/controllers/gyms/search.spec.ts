@@ -13,7 +13,9 @@ describe("Gym (e2e)", () => {
   });
 
   it("Deve ser possível pesquisar academias na aplicação", async () => {
-    const { token } = await createAndAuthUser(app);
+    const { token } = await createAndAuthUser(app, "ADMIN");
+
+    console.log("Nárnia");
 
     await request(app.server)
       .post("/gyms")
@@ -36,6 +38,8 @@ describe("Gym (e2e)", () => {
         latitude: -22.4327836,
         longitude: -43.138504,
       });
+
+    console.log("Criou academia");
 
     const response = await request(app.server)
       .get("/gyms/search")
