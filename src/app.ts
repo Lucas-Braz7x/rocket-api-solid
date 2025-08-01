@@ -4,6 +4,7 @@ import FastifySwagger from "@fastify/swagger";
 import FastifySwaggerUI from "@fastify/swagger-ui";
 import { env } from "./env";
 import fastifyJwt from "@fastify/jwt";
+import fastifyCookie from "@fastify/cookie";
 import { usersRouter } from "./http/controllers/users/routes";
 import { gymsRouter } from "./http/controllers/gyms/route";
 import { checkInsRouter } from "./http/controllers/check-ins/routes";
@@ -43,8 +44,16 @@ app.register(FastifySwaggerUI, {
   staticCSP: true,
 });
 
+app.register(fastifyCookie);
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: "refreshToken",
+    signed: false,
+  },
+  sign: {
+    expiresIn: "10m",
+  },
 });
 
 app.register(usersRouter);
