@@ -13,7 +13,7 @@ describe("Create CheckIn (e2e)", () => {
   });
 
   it("Deve ser possível criar um check in na aplicação", async () => {
-    const { token } = await createAndAuthUser(app);
+    const { token } = await createAndAuthUser(app, "ADMIN");
 
     const responseGym = await request(app.server)
       .post("/gyms")

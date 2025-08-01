@@ -14,7 +14,7 @@ describe("Metrics CheckIn (e2e)", () => {
   });
 
   it("Deve ser possível listar a quantidade de checkins na aplicação", async () => {
-    const { token } = await createAndAuthUser(app);
+    const { token } = await createAndAuthUser(app, "ADMIN");
 
     const user = await prisma.user.findFirstOrThrow();
 
